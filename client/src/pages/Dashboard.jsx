@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { dummyResumeData } from "../assets/assets";
 
 const Dashboard = () => {
-  const [allResumes, setResumes] = useState([]);
+  const [allResumes, setAllResumes] = useState([]);
   const [showCreateResume, setShowCreateResume] = useState(false);
   const [showUploadResume, setShowUploadResume] = useState(false);
   const [title, setTitle] = useState("");
@@ -23,7 +23,7 @@ const Dashboard = () => {
   const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
 
   const loadAllResumes = async () => {
-    setResumes(dummyResumeData);
+    setAllResumes(dummyResumeData);
   };
 
   const createResume = async (event) => {
@@ -36,6 +36,19 @@ const Dashboard = () => {
     setShowUploadResume(false);
     navigate(`/app/builder/res112`);
   };
+
+  const editTitle=async(event)=>{
+    event.preventDefault()
+  }
+
+  const delteResume=async(resumeId)=>{
+    const confirm=window.confirm("Are you sure want to delete this resume?")
+    if(confirm){
+      setAllResumes(prev=>prev.filter(resume=>resume._id !== resumeId))
+    }
+
+  }
+
 
   useEffect(() => {
     loadAllResumes();
@@ -92,7 +105,7 @@ const Dashboard = () => {
           {allResumes.map((resume, index) => {
             const baseColor = colors[index % colors.length];
             return (
-              <button
+              <button onClick={()=>navigate(`/app/builder/${resume._id}`)}
                 key={index}
                 className="relative w-full sm:max-w-36 h-48 flex
               flex-col items-center justify-center rounded-lg gap-2 border group
@@ -121,12 +134,12 @@ const Dashboard = () => {
                 >
                   Updated on{new Date(resume.updatedAt).toLocaleDateString()}
                 </p>
-                <div className="absolute top-1 right-1 group-hover:flex items-center hidden">
-                  <TrashIcon
+                <div onClick={(e)=>e.stopPropagation()} className="absolute top-1 right-1 group-hover:flex items-center hidden">
+                  <TrashIcon onClick={()=>delteResume(resume._id)}
                     className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700
                  transition-colors"
                   />
-                  <PencilIcon
+                  <PencilIcon onClick={()=>{setEditResumeId(resume._id);setTitle(resume.title)}}
                     className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700
                  transition-colors"
                   />
@@ -235,6 +248,48 @@ const Dashboard = () => {
                 hover:text-slate-600 cursor-pointer transition-colors"
                 onClick={() => {
                   setShowUploadResume(false);
+                  setTitle("");
+                }}
+              />
+            </div>
+          </form>
+        )}
+
+
+   {/* edit resume  */}
+        {editResumeId && (
+          <form
+            onSubmit={editTitle}
+            onClick={() => setEditResumeId('')}
+            className="fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50
+            z-10 flex items-center justify-center"
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="relative bg-slate-50 border shadow-md rounded-lg
+              w-full max-w-sm p-6"
+            >
+              <h2 className="text-xl font-bold mb-4">Edit Resume Title</h2>
+              <input
+                onChange={(w) => setTitle(e.target.value)}
+                value={title}
+                type="text"
+                placeholder="Enter resume title"
+                className="w-full
+                px-4 py-2 mb-4 focus:border-green-600 ring-green-600"
+                required
+              />
+              <button
+                className="w-full py-2 bg-green-600 text-white rounded
+                hover:bg-green-700 transition-colors"
+              >
+                Update
+              </button>
+              <XIcon
+                className="absolute top-4 right-4 text-slate-400
+                hover:text-slate-600 cursor-pointer transition-colors"
+                onClick={() => {
+                  setEditResumeId('');
                   setTitle("");
                 }}
               />
