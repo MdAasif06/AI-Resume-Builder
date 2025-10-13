@@ -37,18 +37,16 @@ const Dashboard = () => {
     navigate(`/app/builder/res112`);
   };
 
-  const editTitle=async(event)=>{
-    event.preventDefault()
-  }
+  const editTitle = async (event) => {
+    event.preventDefault();
+  };
 
-  const delteResume=async(resumeId)=>{
-    const confirm=window.confirm("Are you sure want to delete this resume?")
-    if(confirm){
-      setAllResumes(prev=>prev.filter(resume=>resume._id !== resumeId))
+  const delteResume = async (resumeId) => {
+    const confirm = window.confirm("Are you sure want to delete this resume?");
+    if (confirm) {
+      setAllResumes((prev) => prev.filter((resume) => resume._id !== resumeId));
     }
-
-  }
-
+  };
 
   useEffect(() => {
     loadAllResumes();
@@ -67,13 +65,13 @@ const Dashboard = () => {
           <button
             onClick={() => setShowCreateResume(true)}
             className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center
-         justify-center rounded-lg gap-2 text-slate-600 border border-dashed
+          justify-center rounded-lg gap-2 text-slate-600 border border-dashed
          border-slate-300 group-hover:border-indigo-500 hover:shadow-lg transition-all
-         duration-300 cursor-pointer"
+          duration-300 cursor-pointer"
           >
             <PlusIcon
               className="size-11 transition-all duration-300 p-2.5
-          bg-gradient-to-br from-indigo-300 to-indigo-500 text-white rounded-full"
+           bg-gradient-to-br from-indigo-300 to-indigo-500 text-white rounded-full"
             />
             <p className="text-sm group-hover:text-purple-500 transition-all">
               Create Resume
@@ -105,7 +103,8 @@ const Dashboard = () => {
           {allResumes.map((resume, index) => {
             const baseColor = colors[index % colors.length];
             return (
-              <button onClick={()=>navigate(`/app/builder/${resume._id}`)}
+              <button
+                onClick={() => navigate(`/app/builder/${resume._id}`)}
                 key={index}
                 className="relative w-full sm:max-w-36 h-48 flex
               flex-col items-center justify-center rounded-lg gap-2 border group
@@ -117,7 +116,7 @@ const Dashboard = () => {
                 }}
               >
                 <FilePenIcon
-                  className="sizw-7 group-hover:scale-105 transition-all"
+                  className="size-7 group-hover:scale-105 transition-all"
                   style={{ color: baseColor }}
                 />
                 <p
@@ -134,12 +133,20 @@ const Dashboard = () => {
                 >
                   Updated on{new Date(resume.updatedAt).toLocaleDateString()}
                 </p>
-                <div onClick={(e)=>e.stopPropagation()} className="absolute top-1 right-1 group-hover:flex items-center hidden">
-                  <TrashIcon onClick={()=>delteResume(resume._id)}
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="absolute top-1 right-1 group-hover:flex items-center hidden"
+                >
+                  <TrashIcon
+                    onClick={() => delteResume(resume._id)}
                     className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700
                  transition-colors"
                   />
-                  <PencilIcon onClick={()=>{setEditResumeId(resume._id);setTitle(resume.title)}}
+                  <PencilIcon
+                    onClick={() => {
+                      setEditResumeId(resume._id);
+                      setTitle(resume.title);
+                    }}
                     className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700
                  transition-colors"
                   />
@@ -163,7 +170,7 @@ const Dashboard = () => {
             >
               <h2 className="text-xl font-bold mb-4">Create a Resume</h2>
               <input
-                onChange={(w) => setTitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value)}
                 value={title}
                 type="text"
                 placeholder="Enter resume title"
@@ -216,9 +223,8 @@ const Dashboard = () => {
                   htmlFor="resume-input"
                   className="block text-sm text-slate-700"
                 >
-                  Select Resume File
-                  <div
-                    className="flex flex-col items-center justify-center gap-2
+                Select Resume File
+                <div className="flex flex-col items-center justify-center gap-2
                 border group text-slate-400 border-slate-400 border-dashed
                 rounded-md p-4 py-10 my-4 hover:border-green-500
                 hover:text-green-700 cursor-pointer transition-colors"
@@ -233,8 +239,13 @@ const Dashboard = () => {
                     )}
                   </div>
                 </label>
-                <input type="file" id="resume-input" accept=".pdf" hidden
-                onChange={(e)=>setResume(e.target.files[0])}/>
+                <input
+                  type="file"
+                  id="resume-input"
+                  accept=".pdf"
+                  hidden
+                  onChange={(e) => setResume(e.target.files[0])}
+                />
               </div>
 
               <button
@@ -255,12 +266,11 @@ const Dashboard = () => {
           </form>
         )}
 
-
-   {/* edit resume  */}
+        {/* edit resume  */}
         {editResumeId && (
           <form
             onSubmit={editTitle}
-            onClick={() => setEditResumeId('')}
+            onClick={() => setEditResumeId("")}
             className="fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50
             z-10 flex items-center justify-center"
           >
@@ -271,7 +281,7 @@ const Dashboard = () => {
             >
               <h2 className="text-xl font-bold mb-4">Edit Resume Title</h2>
               <input
-                onChange={(w) => setTitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value)}
                 value={title}
                 type="text"
                 placeholder="Enter resume title"
@@ -289,7 +299,7 @@ const Dashboard = () => {
                 className="absolute top-4 right-4 text-slate-400
                 hover:text-slate-600 cursor-pointer transition-colors"
                 onClick={() => {
-                  setEditResumeId('');
+                  setEditResumeId("");
                   setTitle("");
                 }}
               />
