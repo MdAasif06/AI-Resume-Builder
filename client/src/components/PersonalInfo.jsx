@@ -1,8 +1,6 @@
 import { BriefcaseBusiness, Globe, Linkedin, Mail, MapPin, Phone, User } from 'lucide-react'
 
 const PersonalInfo = ({data,onChange,removeBackGround,setRemoveBackground}) => {
-
-
     const handleChange=(field,value)=>{
         onChange({...data,[field]:value})
     }
@@ -22,7 +20,7 @@ const PersonalInfo = ({data,onChange,removeBackGround,setRemoveBackground}) => {
         <p className='text-sm text-gray-600'>Get started with the prosonal information</p>
         <div className='flex items-center gap-2'>
         <label>
-            {data.image ? (<img src={ typeof data.image === 'string' ? data.image :URL.createObjectURL(data.image)} alt="user-image" 
+            {data.image ? (<img src={ typeof data.image === 'string' ? data.image : URL.createObjectURL(data.image)} alt="user-image" 
             className='w-16 h-16 rounded-full object-cover mt-5 ring ring-slate-300 hover:opacity-80'/>) 
             : (
                 <div className='inline-flex items-center gap-2 mt-5 text-slate-600
@@ -32,10 +30,9 @@ const PersonalInfo = ({data,onChange,removeBackGround,setRemoveBackground}) => {
                 </div>
             ) }
             <input type="file" accept='image/jpeg, image/png' className='hidden'
-            onChange={(e)=>{handleChange("image",e.target.files[0])}} />
+            onChange={(e)=>handleChange("image",e.target.files[0])} />
         </label>
-        {
-            typeof data.image === 'object'&& (
+        { typeof data.image === 'object' && (
                 <div className='flex flex-col gap-1 pl-4 text-sm'>
                     <p>Remove Background</p>
                     <label className='relative inline-flex items-center cursor-pointer
@@ -44,7 +41,6 @@ const PersonalInfo = ({data,onChange,removeBackGround,setRemoveBackground}) => {
                       onChange={()=>setRemoveBackground(pre=> !pre)} checked={removeBackGround} />
                       <div className='w-9 h-5 bg-slate-300 rounded-full peer
                       peer-checked:bg-green-600 transition-colors duration-200'>
-
                       </div>
                       <span className='dot absolute left-1 top-1 w-3 h-3 bg-white
                       rounded-full transition-transform duration-200 ease-in-out

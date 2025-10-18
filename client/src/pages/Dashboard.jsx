@@ -59,7 +59,7 @@ const Dashboard = () => {
           className="text-2xl font-medium mb-6 bg-gradient-to-r from bg-slate-600 to to-slate-700
         bg-clip-text text-transparent sm:hidden"
         >
-          Welcome to Amsher Bhai
+          Welcome to Amsher Bhai.
         </p>
         <div className="flex gap-4">
           <button
@@ -78,10 +78,7 @@ const Dashboard = () => {
             </p>
           </button>
 
-          <button
-            onClick={() => {
-              setShowUploadResume(true);
-            }}
+          <button onClick={() => {setShowUploadResume(true)}}
             className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center
          justify-center rounded-lg gap-2 text-slate-600 border border-dashed
          border-slate-300 group hover:border-purple-500 hover:shadow-lg transition-all
@@ -107,8 +104,8 @@ const Dashboard = () => {
                 onClick={() => navigate(`/app/builder/${resume._id}`)}
                 key={index}
                 className="relative w-full sm:max-w-36 h-48 flex
-              flex-col items-center justify-center rounded-lg gap-2 border group
-              hover:shadow-lg transition-all duration-300 cursor-pointer"
+               flex-col items-center justify-center rounded-lg gap-2 border group
+               hover:shadow-lg transition-all duration-300 cursor-pointer"
                 style={{
                   background: `linear-gradient(135deg,${baseColor}10,${baseColor}/40)
                 `,

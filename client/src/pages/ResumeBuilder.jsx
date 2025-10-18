@@ -13,6 +13,7 @@ import {
   User,
 } from "lucide-react";
 import PersonalInfo from "../components/PersonalInfo";
+import ResumePreview from "../components/ResumePreview";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
@@ -52,19 +53,18 @@ const ResumeBuilder = () => {
 
   useEffect(() => {
     loadExistingResume();
-  });
+  },[]);
   return (
     <div>
       <div className="max-w-7xl mx-auto px-4 py-6">
-        <Link
-          to={"/app"}
-          className="inline-flex gap-2 items-center text-center text-slate-500
+        <Link to={"/app"}
+        className="inline-flex gap-2 items-center text-center text-slate-500
         hover:text-slate-700 transition-all"
         >
-          <ArrowLeftIcon className="size-4" />
-          Back to Dashboard
+        <ArrowLeftIcon className="size-4" />Back to Dashboard
         </Link>
       </div>
+
       <div className="max-w-7xl mx-auto px-4 pb-8">
         <div className="grid lg:grid-cols-12 gap-8">
           {/* left panel form */}
@@ -72,47 +72,33 @@ const ResumeBuilder = () => {
             <div>
               {/* progress bar using active section */}
               <hr className="absolute top-0 left-0 right-0 border-2 border-gray-200" />
-              <hr
-                className="absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600
+              <hr className="absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600
               border-none transition-all duration-200"
-                style={{
-                  width: `${
-                    (activeSectionIndex * 100) / (sections.length - 1)
-                  }%`,
+                style={{width: `${activeSectionIndex * 100 / (sections.length - 1)}`
                 }}
               />
             </div>
             {/* section navigation */}
-            <div className="flex justify-between items-center mb-6 border-b bg-white border-gray-300 py-1">
+            <div className="flex justify-between items-center mb-6 border-b border-gray-300 py-1">
               <div></div>
               <div className="flex items-center">
                 {activeSectionIndex !== 0 && (
-                  <button
-                    onClick={() =>
-                      setActiveSectionIndex(
-                        () => (prevIndex) => Math.max(prevIndex - 1, 0)
-                      )
-                    }
+                  <button onClick={() => setActiveSectionIndex(() => (prevIndex) => Math.max(prevIndex - 1, 0))}
                     className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium
-                text-gray-600 hover:bg-gray-50 transition-all "
-                    disabled={activeSectionIndex === 0}
-                  >
-                    <ChevronLeft className="size-4" />
-                    Previous
+                  text-gray-600 hover:bg-gray-50 transition-all "
+                    disabled={activeSectionIndex === 0}>
+                    <ChevronLeft className="size-4" />Previous
                   </button>
                 )}
-                <button onClick={() =>
-                    setActiveSectionIndex(() => (prevIndex) =>
-                    Math.min(prevIndex + 1, sections.length - 1))
-                  }
+                <button
+                  onClick={() =>setActiveSectionIndex(() => (prevIndex) =>Math.min(prevIndex + 1, sections.length - 1))}
                   className={`flex items-center gap-1 p-3 rounded-lg 
                   text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all ${
-                  activeSectionIndex === sections.length - 1 && "opacity-50 "
-                }`}
+                    activeSectionIndex === sections.length - 1 && "opacity-50 "
+                  }`}
                   disabled={activeSectionIndex === sections.length - 1}
-                >Next
-                  <ChevronRight className="size-4" />
-                  
+                >
+                  Next<ChevronRight className="size-4" />
                 </button>
               </div>
             </div>
@@ -122,9 +108,7 @@ const ResumeBuilder = () => {
               {activeSection.id === "personal" && (
                 <PersonalInfo
                   data={resumeData.personal_info}
-                  onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, personal_info: data }))
-                  }
+                  onChange={(data) =>setResumeData((prev) => ({ ...prev, personal_info: data }))}
                   removeBackGround={removeBackground}
                   setRemoveBackground={setRemoveBackground}
                 />
@@ -133,7 +117,15 @@ const ResumeBuilder = () => {
           </div>
 
           {/* right panel form */}
-          <div></div>
+          <div className="lg:col-span-7 max-lg:mt-6">
+            <div>
+              {/* buttonss */}
+            </div>
+
+            {/* resume preview */}
+            <ResumePreview data={resumeData} template={resumeData.template} accentColor={resumeData.accent_color}/>
+
+          </div>
         </div>
       </div>
     </div>
